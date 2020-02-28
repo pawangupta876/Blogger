@@ -1,0 +1,142 @@
+{% extends 'App1/base.html'%}
+{%block head%}
+<style>
+#other:hover {
+    color:red;
+}
+#friend:hover{
+    color:indigo;
+}
+#inputdesign{
+	
+   display: none;
+	
+
+}
+#label{
+    display: inline-block;
+    border: 1px solid blue;
+    padding:5px 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+    color:blueviolet;
+}
+#label:hover{
+
+    background-color: blueviolet;
+    color:white;
+    cursor: pointer;
+}
+</style>
+{%endblock%}
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+     <a class="navbar-brand" style="font-style:italic;" href="#"><strong style="color:#2f3473">Blogs</strong></a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+     </button>
+
+     <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="navbar-brand" style="font-style:italic;" href="{% url 'App1:user_logout' %}"><strong style="color:#2f3473">Logout</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="navbar-brand" style="font-style:italic;" href="{% url 'App1:profile' %}"><strong style="color:#2f3473">Profile</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="navbar-brand" style="font-style:italic;" href="#"><strong style="color:#2f3473">Friends</strong></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="navbar-brand" style="font-style:italic;" href="#"><strong style="color:#2f3473">Chats</strong></a>
+                </li>
+               
+                
+
+
+         </ul>
+         
+        
+    </div>
+    <div class="float-right">
+    
+        <h4 style="font-style:italic;"><strong style="color:mediumvioletred">Welcome! {{user.username}}</strong></h4>
+      
+    </div>
+
+</nav>
+
+   
+
+
+<div class="container-fluid">
+      <div class="row">
+           <div class="col-sm-3">
+            {% load staticfiles %}
+               
+            <img style="margin-top: 10px; position: fixed;" src="{% static 'images/side.jpg' %}" height=650 width=350 alt="sorry"/>
+
+
+                 
+           </div>
+                    
+           <div class="col-sm-6">
+                        <br>
+                              <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'App1:home_page' %}" autocomplete="off" enctype="multipart/form-data">
+                                  {% csrf_token %}
+                                  <input class="form-control mr-sm-2" style="margin-left: 15px;" type="text" id="data" name="data" autocomplete="off" placeholder="Type post here ..."  value ="" />
+                                  <label id="label"><input id="inputdesign" type="file" id="image" name="file1"/>Select-Picture</label>
+                                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Post...here</button>
+
+                              </form>
+                        <br>
+                        <div class="text-center">
+                                {% for p in posts %}
+                              
+                                <h2 style="font-weight:bolder; color:#39353d;">{{p.post}}</h2>
+
+                              
+                                {% if p.image %}
+                                <img class="img-fluid" style="border:3px solid green;border-radius: 10px;" width=700 src="{{p.image.url}}"/>
+                                <br><br>
+                                {% endif%}
+                               
+                                <h5 style="font-weight:bold; color:red; font-size:small;">Posted by {{p.user}} on {{p.time}}</h5>
+                                <hr>
+                                {% endfor %}
+                        </div>
+            </div>
+
+                      
+            <div class="col-sm-3"> 
+                        
+                            
+                               
+                                 <div class="container" style="position: fixed; margin-left:2%">
+
+                                    <br>
+                                      <h2 style="font-size: 200%;">Other People!</h2>
+                                      {% for friend in friends %}
+                                          <strong><a id = "other" style="text-decoration:none;" href = "{% url 'App1:profile_view' pk=friend.pk %}">{{friend.username}}</a></strong><br>
+                                      {% endfor %}
+                                      <br>
+                                      <br>
+                                      <h2>Your Friends!</h2>
+                                      {% for each in list %}
+                                          <strong><a id = "friend" style="text-decoration:none;" href = "{% url 'App1:comments' pk=each.pk %}">{{each.friends}}</a></strong><br>
+                                      {% endfor %}
+                               </div>
+                            
+                        
+            </div>
+                  
+                        
+                  
+       </div>
+</div>
+
+{% endblock %}

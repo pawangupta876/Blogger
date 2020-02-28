@@ -1,0 +1,59 @@
+{% extends 'App1/base.html'%}
+{% block head %}
+<title>Login</title>
+<style>
+    .card
+    {border: 1px solid rgba(0, 0, 0, 0.295);}
+    body{
+        background-color: #f9f9f9;
+    }
+</style>
+{% endblock %}
+{% block body %}
+
+<div class="container">
+
+   
+
+    <div class="container pt-5 ">
+        <div class = "row justify-content-center py-3">   
+            <img src="https://img.icons8.com/ios-filled/50/000000/data-configuration.png"></div>
+    <div class = "row justify-content-center">
+        <div class = "col-md-4">
+        
+        <div class = "card">
+           
+            <div class="card-header info-color white-text text-center py-4" style="background-color:white">
+                <strong>Login Please!</strong>
+            </div>
+        <form class="text-center"  action="{% url 'App1:user_login' %}" method="POST">
+            {% csrf_token %}
+
+          
+
+            
+
+            <div class="container py-3">
+                <label for="materialSubscriptionFormPasswords"><strong>Username</strong></label>
+                <input type="text" id="materialSubscriptionFormPasswords" name="username" class="form-control">   
+            
+
+                <label for="materialSubscriptionFormEmail"><strong>Password</strong></label>
+                <input type="password" id="materialSubscriptionFormEmail" name="password" class="form-control">
+            
+           
+            <button class="btn btn-outline-info btn-rounded btn-block  px-2 my-4  waves-effect" type="submit">Sign in</button>
+            </div>
+        </form></div>
+        <div class = "py-2">
+        <div class = "card py-2">
+            <span class = "px-2 py-2">
+            New to GitHub? <a href="{% url 'App1:register' %}">Create an account.</a></span>
+        </div></div>
+        </div>
+    </div>
+    </div>
+</div>
+<a href="https://icons8.com/icon/11400/database-administrator"></a>
+</div>
+{% endblock %}

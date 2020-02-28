@@ -1,0 +1,211 @@
+{% extends 'App1/base.html' %}
+{% block head %}
+
+<style>
+
+
+
+.image_outer_container{
+   margin-top: auto;
+   margin-bottom: auto;
+   border-radius: 50%;
+   position: relative;
+}
+
+.image_inner_container{
+   border-radius: 50%;
+   padding: 5px;
+background: rgb(57, 4, 92); 
+background: -webkit-linear-gradient(to bottom, rgb(57, 4, 92), rgb(57, 4, 92), rgb(57, 4, 92)); 
+background: linear-gradient(to bottom, rgb(57, 4, 92), rgb(57, 4, 92), rgb(57, 4, 92));
+}
+.image_inner_container img{
+   height: 200px;
+   width: 200px;
+   border-radius: 50%;
+   border: 5px solid white;
+}
+#magic:hover{
+    color:tomato;
+}
+
+</style>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <a class="navbar-brand" style="font-style:italic; color:#2f3473;" href="{% url 'App1:home_page'%}"><strong>Home</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav">
+              <li class="nav-item active">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="{% url 'App1:user_logout' %}"><strong>Logout</strong></a>
+            
+               </li>
+            
+
+               <li class="nav-item">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="#"><strong>Profile</strong></a>
+               </li>
+
+               <li class="nav-item">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="#"><strong>Friends</strong></a>
+               </li>
+
+               <li class="nav-item">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="#"><strong>Chats</strong></a>
+               </li>
+         </ul>
+   </div>
+   <div class="float-right">
+    
+    <h4 style="font-style:italic;"><strong style="color:mediumvioletred">Welcome! {{user1.username}}</strong></h4>
+  
+</div>
+
+</nav>
+<div class="container-fluid">
+
+<div class = "row">
+    <div class = col col-xs-4 style="text-align: center;">
+        <header style="font-size: xx-large; font-weight: bolder; color:blue;font-family: 'Times New Roman', Times, serif;">POST</header>
+        <br><hr>
+        
+        <h3 style="font-weight:bolder; color:#39353d;">{{user_post.post}}</h3>
+    
+                   
+        {% if user_post.image %}
+        <img class="img-fluid" style="border:3px solid green;border-radius: 10px;" width=400 src="{{user_post.image.url}}"/>
+        <br>
+        <br>
+        {% endif%}
+        <h5 style="font-weight:bold; color:#4f4954; font-size:medium;">Posted by {{user_post.user}} on {{user_post.time}}</h5>
+       
+       <br>
+    
+       <h4 style="color:darkred;font-weight: bold;">Liked By {{likes}} People</h4>
+       <br>
+       <h2 style="color:blue; text-align: center; font-weight: bolder; font-family:'Times New Roman', Times, serif;">Friends</h2>
+       {% for each in friends %}
+       <strong style="text-align: center;"><a id ="magic" style="text-decoration: none;" href = "{% url 'App1:returned' pk=each.pk %}" style="color:black">{{each.friends}}</a></strong><br>
+       {% endfor %}
+    
+    </div>
+    <div class = col col-xs-2 style = "text-align: center;">
+        {% for comment in comments %}
+        <h4 style="font-weight:bolder; color:#39353d; padding-top:10px;">{{comment.comments}}</h4>
+        <br>
+        <h5 style="font-weight:bold; color:green; font-size:small;">Commented by {{comment.user}} on {{comment.time}}</h5>
+        
+          <br>
+        {% endfor %}
+    </div>
+    <div class = col col-xs-6>
+        <h2 style="color:blue; text-align: center; font-weight: bolder; font-family: 'Times New Roman', Times, serif;">Profile Picture</h2><br>
+        {% if user.userprofileinfo.profile_pic %}
+      
+            <div class="d-flex justify-content-center">
+                <div class="image_outer_container">
+                    <div class="image_inner_container">
+                        <img src="{{user.userprofileinfo.profile_pic.url}}">
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+      
+     <div class="row" style="text-align: center; padding-top: 20px;">
+         <div class="col col-xs-3" >
+            <ul>
+                <label><strong>Username :- </strong> </label>
+                
+            </ul>
+        
+
+        <ul>
+            <label><strong>First_Name :- </strong> </label>
+            
+        </ul>
+    
+
+
+        <ul>
+            <label><strong>Last_Name :- </strong></label>
+         
+        </ul>
+    
+
+
+        <ul>
+            <label><strong>Contact_Number :- </strong></label>
+            
+        </ul>
+      
+
+
+        <ul>
+            <label><strong>Qualification :- </strong></label>
+            
+        </ul>
+   
+
+
+        <ul>
+            <label><strong>Gender :- </strong></label>
+            
+        </ul>
+    
+         </div>
+<div class="col col-xs-3">
+    <ul>
+        <label><strong>{{user.username}}</strong> </label>
+        
+    </ul>
+
+
+<ul>
+    <label><strong>{{user.first_name}}</strong> </label>
+    
+</ul>
+
+
+
+<ul>
+    <label><strong>{{user.last_name}}</strong></label>
+ 
+</ul>
+
+
+
+<ul>
+    <label><strong>{{user.userprofileinfo.contact_number}}</strong></label>
+    
+</ul>
+
+
+
+<ul>
+    <label><strong>{{user.userprofileinfo.qualification}}</strong></label>
+    
+</ul>
+
+
+
+<ul>
+    <label><strong>{{user.userprofileinfo.gender}}</strong></label>
+    
+</ul>
+
+         </div>
+
+
+
+     </div>
+
+   </div>
+
+</div>
+</div>
+{% endblock %}

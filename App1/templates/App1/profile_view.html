@@ -1,0 +1,166 @@
+{% extends 'App1/base.html'%}
+{% block head %}
+
+<style>
+
+
+
+.image_outer_container{
+   margin-top: auto;
+   margin-bottom: auto;
+   border-radius: 50%;
+   position: relative;
+}
+
+.image_inner_container{
+   border-radius: 50%;
+   padding: 5px;
+   background: rgb(57, 4, 92);  
+   background: -webkit-linear-gradient(to bottom, rgb(57, 4, 92), rgb(57, 4, 92), rgb(57, 4, 92)); 
+   background: linear-gradient(to bottom, rgb(57, 4, 92), rgb(57, 4, 92), rgb(57, 4, 92));
+}
+.image_inner_container img{
+   height: 200px;
+   width: 200px;
+   border-radius: 50%;
+   border: 5px solid white;
+}
+
+</style>
+{% endblock %}
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <a class="navbar-brand" style="font-style:italic; color:#2f3473;" href="{% url 'App1:home_page'%}"><strong>Home</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav">
+              <li class="nav-item active">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="{% url 'App1:user_logout' %}"><strong>Logout</strong></a>
+            
+               </li>
+            
+
+               <li class="nav-item">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="#"><strong>Edit-Profile</strong></a>
+               </li>
+
+               <li class="nav-item">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="#"><strong>Friends</strong></a>
+               </li>
+
+               <li class="nav-item">
+                   <a class="navbar-brand" style="font-style:italic; color:#2f3473" href="#"><strong>Chats</strong></a>
+               </li>
+         </ul>
+   </div>
+
+   <div class="float-right">
+    
+    <h4 style="font-style:italic;"><strong style="color:mediumvioletred">Welcome! {{user1.username}}</strong></h4>
+  
+</div>
+
+</nav>
+
+
+<div class="row">
+
+
+    <div class="col col-xs-7" style="text-align: center;">
+        <h1 style = "color:blue; font-family: 'Times New Roman', Times, serif;">{{user.username}} posts</h1>
+        <hr>
+                   {% if posts %}
+                   {% for p in posts %}
+                    
+                    <h3 style="font-weight:bolder; color:#39353d;">{{p.post}}</h3>
+    
+                   
+                    {% if p.image %}
+                    <img class="img-fluid" style="border:3px solid green; border-radius: 10px;"width=500 src="{{p.image.url}}"/>
+                    <br>
+                    <br>
+                    {% endif%}
+                    <h5 style="font-weight:bold; color:red; font-size:small;">Posted by {{p.user}} on {{p.time}}</h5>
+                    <hr>
+                    {% endfor %}
+                    {% else %}
+                    <h3 style="color:lightcoral">No Post Till Now</h3>
+                    {% endif %}
+                   
+    
+    </div>
+
+    <div class="col col-xs-5" style="text-align: center;">
+        
+                   <br>
+                <div class="d-flex justify-content-center">
+                    <div class="image_outer_container">
+                        
+                        <div class="image_inner_container">
+                            <img src="{{user.userprofileinfo.profile_pic.url}}">
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+           
+           
+                 
+                    <br>
+                    
+                        <form method="POST" action="{% url 'App1:profile_view' pk=user.pk %}">
+                            {% csrf_token %}
+                        <button  type="submit" class="btn btn-outline-primary">Add...as Friend</button>
+                        </form>
+                
+           
+                    <br>
+
+                            
+                                <label><strong>Username :--> {{user.username}}</strong> </label>
+                                
+                            
+                            <br>
+        
+                            
+                                <label><strong>First_Name :--> {{user.first_name}}</strong> </label>
+                                
+                            
+                        
+                            <br>
+        
+                            
+                                <label><strong>Last_Name :--> {{user.last_name}}</strong></label>
+                             
+                            
+                         
+                            <br>
+        
+                            
+                                <label><strong>E-mail :--> {{user.email}}</strong></label>
+                               
+                            
+                         
+                            <br>
+        
+                            
+                                <label><strong>Gender :--> {{user.userprofileinfo.gender}}</strong></label>
+                                
+                            
+                        
+                     
+                   
+              
+
+           
+
+           
+    
+
+</div>
+
+</div>
+{% endblock %}
