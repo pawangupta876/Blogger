@@ -94,7 +94,7 @@ def profile(request):
         profile_form = UserProfileForm(instance = userprofile)
         return render(request, 'App1/profile.html', {'profile_form':profile_form, 'user':request.user})
 
-
+from django.db.models import Q
     
 @login_required
 def profile_view(request, pk):
@@ -106,7 +106,7 @@ def profile_view(request, pk):
         Friend.objects.get_or_create(user=user1, friends=user2)
         return redirect('App1:home_page')
 
-    posts = User_Post.objects.all().filter(user = user1).order_by('-time')
+    posts = User_Post.objects.filter(Q(user__friend__friends = request.user)|Q(user = request.user)).distinct().order_by('-time')
     args = {'user':user1, 'posts':posts, 'user1':request.user} 
     return render(request, 'App1/profile_view.html', args)
 
